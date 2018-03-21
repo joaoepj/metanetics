@@ -3,16 +3,16 @@
 %token NULL
 %token EOF
 
-%start <Metanetics.value option> prog
+%start <Nds.value option> grammar
 %%
 
-prog:
+grammar:
   | EOF		{ None }
   | v = value	{ Some v }
   ;
 
 value:
   | s = STRING	{ `String s }
-  | i = INT	{ `INt i }
+  | i = INT	{ `Int i }
   | NULL	{ `Null }
   ;
