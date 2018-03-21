@@ -1,11 +1,14 @@
+# Metanetics
+
 Metanetics is an ontological SDN programming language
 
 
-Compiling
+**Compiling**
 
 $ cd Metanetics
+
 $ ocamlbuild -use-menhir  -tag thread -use-ocamlfind  -pkg core metanetics.native
 
-Testing
+**Testing**
 
 $ ./metanetics.native source-code.nds
