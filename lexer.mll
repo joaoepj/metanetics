@@ -10,6 +10,14 @@ let next_line lexbuf =
     { pos with pos_bol = lexbuf.lex_curr_pos;
                pos_lnum = pos.pos_lnum + 1
     }
+
+let keyword_table = Hashtbl.create 53
+  let _ =
+    List.iter (fun (kwd, tok) -> Hashtbl.add keyword_table kwd tok)
+              [ "null", NULL;
+                "kind", KIND; 
+                "identify", IDENTIFY ]
+
 }
 
 
@@ -21,20 +29,20 @@ let float = digit* frac? exp?
 
 let white = [' ' '\t']+
 let newline = '\r' | '\n' | "\r\n"
-let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+(*let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']* *)
 
 rule read =
   parse
   | white    { read lexbuf }
   | newline  { next_line lexbuf; read lexbuf }
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
-  | "null"   { NULL }
-(*  | '"'      { read_string (Buffer.create 17) lexbuf }
+  | ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']* as id   { try Hashtbl.find keyword_table id with Not_found -> IDENT id }
+(*  | '"'      { read_string (Buffer.create 17) lexbuf } *)
   | '{'      { LEFT_BRACE }
   | '}'      { RIGHT_BRACE }
   | '['      { LEFT_BRACK }
   | ']'      { RIGHT_BRACK }
   | ':'      { COLON }
-  | ','      { COMMA } *)
+  | ','      { COMMA } 
   | _ { raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
   | eof      { EOF }
