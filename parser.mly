@@ -23,7 +23,7 @@ grammar:
 value:
   | LEFT_BRACK vl = array_values RIGHT_BRACK	
 	{ `List vl }
-  | KIND COMMA COMMA id = IDENT k = kind	
+  | KIND COLON COLON id = IDENT k = kind	
 	{ match k with (i, r, b) -> `Kind (id, i, r, b)  }
   | s = STRING	
 	{ `String s }
@@ -36,7 +36,7 @@ value:
   
 
 kind:
-  | IDENTIFY COMMA i = STRING  RECOGNIZE COMMA r = STRING BEHAVE COMMA b = STRING
+  | IDENTIFY COLON i = STRING  RECOGNIZE COLON r = STRING BEHAVE COLON b = STRING
 	{ (i, r, b) }
 
 array_values:

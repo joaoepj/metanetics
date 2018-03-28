@@ -1,5 +1,5 @@
 [[kind:: Node
-  identify: nome
-  recognize: com os olhos
-  behave: como estátua, 3], kind, 123,[melancia,[], null], abcdef, 456, null]
+  identify: "nome"
+  recognize: "com os olhos"
+  behave: "como estátua", 3],  123,[melancia,[], null], abcdef, 456, null]
 123

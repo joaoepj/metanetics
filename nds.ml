@@ -28,5 +28,4 @@ and print_list outc arr =
       output_value outc v) arr;
   output_string outc "]"
 
-and print_kind k =
-  match k with (id, i, r, b) -> printf "KIND( id: %s, identify: %s, recognize: %s, behave: %s)" id,i,r,b 
+and print_kind (id, i, r, b) =  printf "KIND( id: %s, identify: %s, recognize: %s, behave: %s)" id i r b 
