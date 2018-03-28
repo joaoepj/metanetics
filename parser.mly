@@ -2,7 +2,7 @@
 %token <string> STRING
 %token <string> IDENT
 %token NULL
-%token KIND IDENTIFY
+%token KIND IDENTIFY RECOGNIZE BEHAVE
 %token EOF
 %token LEFT_BRACE
 %token RIGHT_BRACE
@@ -23,8 +23,8 @@ grammar:
 value:
   | LEFT_BRACK vl = array_values RIGHT_BRACK	
 	{ `List vl }
-  | k = KIND 	
-	{ `Kind }
+  | KIND COMMA COMMA id = IDENT k = kind	
+	{ match k with (i, r, b) -> `Kind (id, i, r, b)  }
   | s = STRING	
 	{ `String s }
   | id = IDENT
@@ -34,6 +34,10 @@ value:
   | NULL	
 	{ `Null }
   
+
+kind:
+  | IDENTIFY COMMA i = STRING  RECOGNIZE COMMA r = STRING BEHAVE COMMA b = STRING
+	{ (i, r, b) }
 
 array_values:
   | (* empty *) { [] }

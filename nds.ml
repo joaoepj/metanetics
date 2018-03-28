@@ -1,8 +1,9 @@
 (* Network Domain Specification *)
 
+
 type value = [
   | `List of value list
-  | `Kind
+  | `Kind of (string * string * string * string)
   | `Int of int
   | `Null
   | `Ident of string
@@ -16,7 +17,7 @@ let rec output_value outc = function
   | `String s   -> printf "\"%s\"" s
   | `Int i      -> printf "INT %d" i
   | `Null    -> printf "NULL"
-  | `Kind    -> printf "KIND"
+  | `Kind k   -> print_kind k
   | `Ident id	-> printf "IDENT %s" id
 
 and print_list outc arr =
@@ -25,4 +26,7 @@ and print_list outc arr =
       if i > 0 then
         output_string outc ", ";
       output_value outc v) arr;
-  output_string outc "]" 
+  output_string outc "]"
+
+and print_kind k =
+  match k with (id, i, r, b) -> printf "KIND( id: %s, identify: %s, recognize: %s, behave: %s)" id,i,r,b 
