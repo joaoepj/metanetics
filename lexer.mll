@@ -15,7 +15,9 @@ let keyword_table = Hashtbl.create 53
   let _ =
     List.iter (fun (kwd, tok) -> Hashtbl.add keyword_table kwd tok)
               [ "null", NULL;
-                "kind", KIND; 
+                "kind", KIND;
+		"subkind", SUBKIND;
+		"relator", RELATOR; 
                 "identify", IDENTIFY;
                 "recognize", RECOGNIZE;
                 "behave", BEHAVE; ]
