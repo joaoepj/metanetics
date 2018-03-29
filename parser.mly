@@ -2,12 +2,9 @@
 %token <string> STRING
 %token <string> IDENT
 %token NULL
-%token KIND IDENTIFY RECOGNIZE BEHAVE
+%token KIND SUBKIND RELATOR IDENTIFY RECOGNIZE BEHAVE
 %token EOF
-%token LEFT_BRACE
-%token RIGHT_BRACE
-%token LEFT_BRACK
-%token RIGHT_BRACK
+%token L_BRACE R_BRACE L_BRACK R_BRACK L_PAREN R_PAREN
 %token COLON
 %token COMMA
 
@@ -21,23 +18,39 @@ grammar:
   
 
 value:
-  | LEFT_BRACK vl = array_values RIGHT_BRACK	
-	{ `List vl }
-  | KIND COLON COLON id = IDENT k = kind	
-	{ match k with (i, r, b) -> `Kind (id, i, r, b)  }
-  | s = STRING	
-	{ `String s }
+  | k = kind 		{ k }
+  | s = subkind 	{ s }
+  | r = relator 	{ r }
+  | L_BRACK vl = array_values R_BRACK
+        { `List vl }
+  | s = STRING
+        { `String s }
   | id = IDENT
-	{ `Ident id }
-  | i = INT	
-	{ `Int i }
-  | NULL	
-	{ `Null }
-  
+        { `Ident id }
+  | i = INT
+        { `Int i }
+  | NULL
+        { `Null }
+
+
 
 kind:
-  | IDENTIFY COLON i = STRING  RECOGNIZE COLON r = STRING BEHAVE COLON b = STRING
-	{ (i, r, b) }
+  | KIND COLON COLON kid = IDENT kattr = kindattr	
+	{ match kattr with (identify, recognize, behave) -> `Kind (kid, identify, recognize, behave)  }
+
+kindattr:
+  | IDENTIFY COLON identify = STRING  RECOGNIZE COLON recognize = STRING BEHAVE COLON behave = STRING
+	{ (identify, recognize, behave) }
+
+
+subkind:
+  | SUBKIND L_PAREN kid = IDENT R_PAREN COLON COLON skid = IDENT skattr = kindattr
+        { match skattr with (identify, recognize, behave) -> `Subkind (kid, skid, identify, recognize, behave)  }
+
+relator:
+  | RELATOR L_PAREN related_type = IDENT R_PAREN COLON COLON relid = IDENT relattr = kindattr
+        { match relattr with (identify, recognize, behave) -> `Relator (related_type, relid, recognize, behave)  }
+
 
 array_values:
   | (* empty *) { [] }

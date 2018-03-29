@@ -1,3 +1,23 @@
+kind::Node
+  identify: "CPF"
+  recognize: "camera"
+  behave: "figurante de novela"
+
+kind::Node
+  identify: "CPF"
+  recognize: "talento"
+  behave: "ator principal"
+
+kind::Node
+  identify: "CPF"
+  recognize: "talento"
+  behave: "atriz principal"
+
+subkind(Node)::NetworkElement
+  identify: "ordem de aparecimento"
+  recognize: "evento A, campo 2"
+  behave: "gfgfgf"
+
 [[kind:: Node
   identify: "nome"
   recognize: "com os olhos"

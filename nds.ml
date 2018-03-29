@@ -4,6 +4,8 @@
 type value = [
   | `List of value list
   | `Kind of (string * string * string * string)
+  | `Subkind of (string * string * string * string * string)
+  | `Relator of (string * string * string * string)
   | `Int of int
   | `Null
   | `Ident of string
@@ -19,6 +21,8 @@ let rec output_value outc = function
   | `Null    -> printf "NULL"
   | `Kind k   -> print_kind k
   | `Ident id	-> printf "IDENT %s" id
+  | `Subkind s 	-> print_subkind s
+  | `Relator r	-> print_relator r
 
 and print_list outc arr =
   output_string outc "[";
@@ -28,4 +32,11 @@ and print_list outc arr =
       output_value outc v) arr;
   output_string outc "]"
 
-and print_kind (id, i, r, b) =  printf "KIND( id: %s, identify: %s, recognize: %s, behave: %s)" id i r b 
+and print_kind (kid, i, r, b) =
+  printf "KIND( kid: %s, identify: %s, recognize: %s, behave: %s)" kid i r b
+
+and print_subkind (kid, skid, i, r, b) =
+  printf "SUBKIND( kid: %s, skid: %s, identify: %s, recognize: %s, behave: %s)" kid skid i r b
+
+and print_relator (reltype, relid, r, b) =
+  printf "RELATOR( related_type: %s, relatorid: %s, recognize: %s, behave: %s)" reltype relid  r b

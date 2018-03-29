@@ -40,10 +40,12 @@ rule read =
   | int      { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']* as id   { try Hashtbl.find keyword_table id with Not_found -> IDENT id }
   | '"'      { read_string (Buffer.create 17) lexbuf } 
-  | '{'      { LEFT_BRACE }
-  | '}'      { RIGHT_BRACE }
-  | '['      { LEFT_BRACK }
-  | ']'      { RIGHT_BRACK }
+  | '{'      { L_BRACE }
+  | '}'      { R_BRACE }
+  | '['      { L_BRACK }
+  | ']'      { R_BRACK }
+  | '('      { L_PAREN }
+  | ')'      { R_PAREN }
   | ':'      { COLON }
   | ','      { COMMA } 
   | _ { raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
