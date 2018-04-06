@@ -1,22 +1,63 @@
 kind::Node
-  identify: "CPF"
+  identify: "ordem de aparecimento"
   recognize: "camera"
-  behave: "figurante de novela"
+  behave: "como nó da rede"
 
-kind::Node
-  identify: "CPF"
-  recognize: "talento"
-  behave: "ator principal"
+kind::Port
+  identify: "número da porta"
+  recognize: "enlace conectado"
+  behave: "envia e recebe"
 
-kind::Node
+kind::Person
   identify: "CPF"
-  recognize: "talento"
-  behave: "atriz principal"
+  recognize: "autenticado"
+  behave: "como cliente"
+
+subkind(Port)::PhysicalPort
+   identify: "número da porta"
+  recognize: "enlace conectado"
+  behave: "envia e recebe"
+
+subkind(Port)::LogicalPort
+  identify: "número da porta"
+  recognize: "enlace conectado"
+  behave: "envia e recebe"
+
 
 subkind(Node)::NetworkElement
   identify: "ordem de aparecimento"
   recognize: "evento A, campo 2"
-  behave: "gfgfgf"
+  behave: "como um elemento de rede"
+
+subkind(Node)::Controller
+  identify: "ordem de aparecimento"
+  recognize: "evento B, campo 5"
+  behave: "como um controlador de rede"
+
+subkind(Node)::EndHost
+  identify: "ordem de aparecimento"
+  recognize: "evento C, campo 1"
+  behave: "como um elemento de rede"
+
+role(NetworkElement)::Swith
+  identify: ""
+  recognize: "evento D"
+  behave: "como um switch"
+
+role(NetworkElement)::Router
+  identify: ""
+  recognize: "evento E"
+  behave: "como um router"
+
+role(NetworkElement)::Firewall
+  identify: ""
+  recognize: "evento F"
+  behave: "como um firewall"
+
+relator(Node)::Link
+  identify: ""
+  recognize: "evento F"
+  behave: "como um firewall"
 
 [[kind:: Node
   identify: "nome"

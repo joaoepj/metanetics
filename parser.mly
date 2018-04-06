@@ -2,7 +2,7 @@
 %token <string> STRING
 %token <string> IDENT
 %token NULL
-%token KIND SUBKIND RELATOR IDENTIFY RECOGNIZE BEHAVE
+%token KIND SUBKIND RELATOR ROLE IDENTIFY RECOGNIZE BEHAVE
 %token EOF
 %token L_BRACE R_BRACE L_BRACK R_BRACK L_PAREN R_PAREN
 %token COLON
@@ -20,7 +20,8 @@ grammar:
 value:
   | k = kind 		{ k }
   | s = subkind 	{ s }
-  | r = relator 	{ r }
+  | rlt = relator 	{ rlt }
+  | rl = role		{ rl }
   | L_BRACK vl = array_values R_BRACK
         { `List vl }
   | s = STRING
@@ -48,9 +49,15 @@ subkind:
         { match skattr with (identify, recognize, behave) -> `Subkind (kid, skid, identify, recognize, behave)  }
 
 relator:
-  | RELATOR L_PAREN related_type = IDENT R_PAREN COLON COLON relid = IDENT relattr = kindattr
-        { match relattr with (identify, recognize, behave) -> `Relator (related_type, relid, recognize, behave)  }
+  | RELATOR L_PAREN rel_types = related_types R_PAREN COLON COLON relid = IDENT relattr = kindattr
+        { match relattr with (identify, recognize, behave) -> `Relator (rel_types, relid, recognize, behave)  }
 
+role:
+  | ROLE L_PAREN kid = IDENT R_PAREN COLON COLON rid = IDENT rolattr = kindattr
+        { match rolattr with (identify, recognize, behave) -> `Role (rid, kid, recognize, behave)  }
+
+related_types:
+  | xs = separated_nonempty_list(COMMA,IDENT) { xs }
 
 array_values:
   | (* empty *) { [] }

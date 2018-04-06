@@ -17,7 +17,8 @@ let keyword_table = Hashtbl.create 53
               [ "null", NULL;
                 "kind", KIND;
 		"subkind", SUBKIND;
-		"relator", RELATOR; 
+		"relator", RELATOR;
+		"role", ROLE; 
                 "identify", IDENTIFY;
                 "recognize", RECOGNIZE;
                 "behave", BEHAVE; ]

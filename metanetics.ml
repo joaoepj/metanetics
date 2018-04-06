@@ -37,8 +37,9 @@ let spec =
     +> anon ("filename"  %: string )
 
 let main =
-  Command.basic
+  Command.basic_spec
     ~summary:"Invokes Metanetics."
+    ~readme:(fun () -> "Stop complaining")
     spec
     loop
 
