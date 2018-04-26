@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(ocamllex (lexer))
+
+
+(executables
+ ((names        (metanetics))
+  (public_names (metanetics))
+  (libraries (core metanetics_ppx))
+  (flags (:standard -safe-string))
+))

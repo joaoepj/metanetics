@@ -54,7 +54,7 @@ role(NetworkElement)::Firewall
   recognize: "evento F"
   behave: "como um firewall"
 
-relator(Node)::Link
+relator(Node, Node)::Link
   identify: ""
   recognize: "evento F"
   behave: "como um firewall"

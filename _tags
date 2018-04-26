@@ -1,2 +1,3 @@
 true: package(core)
 true: thread
+true: package(ppx_core)
