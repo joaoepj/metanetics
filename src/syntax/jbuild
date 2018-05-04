@@ -1,0 +1,13 @@
+(jbuild_version 1)
+
+#| commented
+
+(library
+ ((name metanetics_ppx)
+  (public_name metanetics.ppx)
+  (kind ppx_rewriter)
+  (libraries (ppx_driver ppx_core core))
+  (ppx_runtime_libraries ())
+  (preprocess (pps (ppx_metaquot)))))
+
+|#

@@ -1,0 +1,16 @@
+(jbuild_version 1)
+
+(ocamllex (lexer))
+
+;; generate parser
+(menhir
+ ((flags ())
+  (modules (parser))))
+
+
+(executables
+ ((names        (metanetics))
+  (public_names (metanetics))
+  (libraries (core))
+  (flags (:standard -safe-string))
+))
