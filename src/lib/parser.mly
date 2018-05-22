@@ -1,7 +1,8 @@
 %{
 
 open Nds
-
+module S = Syntax
+module L = Location
 
 %}
 
@@ -44,8 +45,6 @@ value:
   | s = subkind 	{ s }
   | rlt = relator 	{ rlt }
   | rl = role		{ rl }
-  | L_BRACK vl = array_values R_BRACK
-        { List vl }
   | s = STRING
         { String s }
   | id = IDENT
@@ -79,15 +78,6 @@ role:
 related_types:
   | xs = separated_nonempty_list(COMMA,IDENT) { xs }
 
-array_values:
-  | (* empty *) { [] }
-  | vl = rev_values { List.rev vl }
-  
-
-rev_values:
-  | v = value { [v] }
-  | vl = rev_values; COMMA; v = value
-    { v :: vl }
   
 
 (*
