@@ -18,18 +18,26 @@ module L = Location
 %token COMMA
 
 
-%start <Nds.value option> grammar 
-(* %start <Ppx_core.Parsetree.expression> test *)
+(* %start <Nds.value option> grammar *)
+%start <Syntax.exp> test
+
 %%
 
 
+%inline loc(X) :
+| x = X { L.mkloc x (L.mk $startpos $endpos) }
+
+symbol :
+| x = loc(IDENT) { L.mkloc (Symbol.symbol x.L.item) x.L.loc }
+
+
 test:
-  | e = exp; EOF
-    {let loc =  Location.{ loc_start = $symbolstartpos; loc_end = $endpos; loc_ghost = false}  in [%expr [%e e] ]}
+  | e = exp  { e }
 
 exp:
-  | i = INT
-    { let loc =  Location.{ loc_start = $symbolstartpos; loc_end = $endpos; loc_ghost = false} in [%expr [%e eint ~loc i] ]}        
+  | i = loc(INT)   { S.Int i }
+  | s = loc(STRING)   { S.String s }
+(*  | k = loc(KIND)  { S.KindTy k } *)       
 
 
 (*******************************************************************************)

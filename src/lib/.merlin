@@ -34,7 +34,7 @@ B /home/joaoepj/.opam/default/lib/stdio
 B /home/joaoepj/.opam/default/lib/typerep
 B /home/joaoepj/.opam/default/lib/variantslib
 FLG -ppx '/mnt/docs/doutorado/Metanetics/_build/default/.ppx/ppx_deriving.std+ppx_sexp_conv+ocaml-migrate-parsetree.driver-main/ppx.exe --as-ppx -no-check'
-FLG -w -40 -safe-string
+FLG -w -40 -safe-string -g
 S .
 S /home/joaoepj/.opam/default/lib/base
 S /home/joaoepj/.opam/default/lib/base/caml

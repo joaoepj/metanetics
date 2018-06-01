@@ -1,7 +1,11 @@
+open Core_kernel
+module Lexing = Mylexing
+
+
 type t = {
   startpos : Lexing.position;
   endpos : Lexing.position;
-}
+}[@@deriving sexp]  
 
 let dummy = {
   startpos = Lexing.dummy_pos;
@@ -11,7 +15,7 @@ let dummy = {
 type 'a loc = {
   item : 'a;
   loc : t;
-}
+}[@@deriving sexp] 
 
 let mk startpos endpos =
   { startpos; endpos }

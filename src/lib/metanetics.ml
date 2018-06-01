@@ -7,11 +7,10 @@ let print_position outx lexbuf =
   fprintf outx "%s:%d:%d" pos.pos_fname
     pos.pos_lnum (pos.pos_cnum - pos.pos_bol + 1)
 
-let parse_with_error lexbuf =
-  try Parser.grammar Lexer.read lexbuf with
+(*let parse_with_error lexbuf =
+  try Parser.test Lexer.read lexbuf with
   | SyntaxError msg ->
     fprintf stderr "%a: %s\n" print_position lexbuf msg;
-    None
   | Parser.Error ->
     fprintf stderr "%a: syntax error\n" print_position lexbuf;
     exit (-1)
@@ -19,10 +18,11 @@ let parse_with_error lexbuf =
 
 let rec parse_and_print lexbuf =
   match parse_with_error lexbuf with
-  | Some value ->
-    printf "%a\n"  Nds.output_value value;
+  | Syntax.Int value ->
+    printf "Syntax.Int\n";
     parse_and_print lexbuf
-  | None -> ()
+  | _ -> ()
+
 
 let loop filename () =
   let inx = In_channel.create filename in
@@ -45,4 +45,16 @@ let main =
 
 
 let () =
-  Command.run ~version:"0.0.0" ~build_info:"RWO" main
+  Command.run ~version:"0.0.0" ~build_info:"RWO" main *)
+
+let main =
+let lexbuf = Lexing.from_string "123 abc" in
+  try Parser.test Lexer.read lexbuf with
+  | SyntaxError msg ->
+    fprintf stderr "%a: %s\n" print_position lexbuf msg;
+     Syntax.Nil (Location.mkloc () { startpos = lexbuf.lex_start_p; endpos = lexbuf.lex_curr_p; }) 
+  | Parser.Error ->
+    fprintf stderr "%a: syntax error\n" print_position lexbuf;
+    exit (-1);;
+
+main;;

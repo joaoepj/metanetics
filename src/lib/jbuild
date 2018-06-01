@@ -18,5 +18,6 @@
                     ppx_sexp_conv
                     ocaml-migrate-parsetree.driver-main -no-check
 		    )))
-  (flags (:standard -safe-string))
+  (modes (byte))
+  (flags (:standard -safe-string -g))
   ))
